@@ -41,9 +41,11 @@ Insert this command on `package.json` to satisfy Standard.js
 
 ### 2. Use `chai-as-promised` as promise library
 
-- Install `babel-polyfill` with `npm install --save-dev babel-polyfill`
-- Install `chai-as-promised` with `npm install --save-dev babel-polyfill`
-- Modify karma by adding:
+Install `babel-polyfill` with `npm install --save-dev babel-polyfill`
+
+Install `chai-as-promised` with `npm install --save-dev babel-polyfill`
+
+Modify karma by adding:
 
     files: [
       '../../node_modules/babel-polyfill/dist/polyfill.js',
@@ -55,7 +57,7 @@ Insert this command on `package.json` to satisfy Standard.js
       '[require.resolve(chai-as-promised)]': ['webpack']
     },
 
-- Modify `webpack.test.conf.js`
+Modify `webpack.test.conf.js`
 
     module: {
       rules: utils.styleLoaders().concat([
