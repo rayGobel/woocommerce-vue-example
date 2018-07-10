@@ -67,3 +67,18 @@ Modify `webpack.test.conf.js`
         }
       ])
     },
+
+### 3. `dotenv` integration
+
+Install `dotenv` with `npm install --save-dev dotenv`
+
+Create `.env` file. Use `.env.example` as a starting point
+
+Modify `config/index.js` to include command:
+
+    `require('dotenv').config`
+
+Environment variable only exposed to config files. Manually export it into
+`config/prod.env.js`. Example
+
+    API_ENDPOINT: process.env.API_ENDPOINT || ''

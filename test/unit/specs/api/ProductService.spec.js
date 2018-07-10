@@ -12,5 +12,10 @@ describe('UserService', () => {
       const result = ProductService.getProducts()
       return expect(result).to.be.eventually.fulfilled
     })
+
+    it('should accept promise as a response', () => {
+      const result = ProductService.getEndpoint()
+      return expect(result).to.equal('http://localhost:8080/')
+    })
   })
 })
