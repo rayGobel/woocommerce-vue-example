@@ -4,7 +4,7 @@ const API_ENDPOINT = process.env.API_ENDPOINT
 const ProductService = {
   getProducts (pageNumber) {
     const endpoint = API_ENDPOINT + 'wp-json/wc/v2/products'
-    return RESTService.get(endpoint, { params: { 'page': pageNumber || 1 } })
+    return RESTService.get(endpoint, { params: { 'per_page': 100 } }) // Assume a lot of products
       .catch(err => this.handleError(err))
   },
 
