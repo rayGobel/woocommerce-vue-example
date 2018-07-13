@@ -23,6 +23,7 @@
         <pagination
           :page="page"
           :maxPage="maxPage"
+          v-on:gotoPageClicked="goToPage"
           v-on:prevPageClicked="goToPrevPage()"
           v-on:nextPageClicked="goToNextPage()"></pagination>
       </div>
@@ -93,9 +94,14 @@ export default {
       const vm = this
       vm.page = vm.page + 1
     },
+    goToPage (n) {
+      const vm = this
+      vm.page = n
+    },
     filterByCategory (categoriesId) {
       // Do simple filtering
       const vm = this
+      vm.page = 1 // reset page to first page for each change
       vm.filter.categories = categoriesId
     }
   }

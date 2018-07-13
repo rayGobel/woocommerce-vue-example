@@ -11,7 +11,7 @@
             type="checkbox"
             v-model="checkedCategories"
             :value="category.id">
-          <i class="form-icon"></i> {{ category.name }}
+          <i class="form-icon"></i> {{ category.name }} - {{ category.count }}
         </label>
       </div>
     </div>
