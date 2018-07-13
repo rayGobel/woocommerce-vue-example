@@ -1,9 +1,21 @@
 <template>
   <div class="container">
     <div class="columns">
-      <div v-for="(product, index) in products" :key="index" class="column col-4 col-md-6 col-xs-12">
-        <product-card :product="product"></product-card>
+
+      <div class="column col-2">
+        <category-filter
+          v-on:checkedCategoriesUpdated="filterByCategory"
+          :categories="categories"></category-filter>
       </div>
+
+      <div class="column col-10">
+        <div class="columns">
+          <div v-for="(product, index) in products" :key="index" class="column col-4 col-md-6 col-xs-12">
+            <product-card :product="product"></product-card>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="divider"></div>
     <div class="columns">
@@ -22,16 +34,19 @@
 import ProductService from '@/api/ProductService'
 import ProductCard from '@/components/ProductCard'
 import Pagination from '@/components/Pagination'
+import CategoryFilter from '@/components/CategoryFilter'
 
 export default {
   name: 'HelloWorld',
   components: {
     'product-card': ProductCard,
-    'pagination': Pagination
+    'pagination': Pagination,
+    'category-filter': CategoryFilter
   },
   data () {
     return {
       products: [],
+      categories: [],
       page: 1,
       maxPage: 2
     }
@@ -40,6 +55,10 @@ export default {
     ProductService.getProducts()
       .then(products => {
         this.products = products
+      })
+    ProductService.getCategories()
+      .then(categories => {
+        this.categories = categories
       })
   },
   methods: {
@@ -62,6 +81,17 @@ export default {
           vm.products = products
           vm.page = nextPage
         })
+    },
+    filterByCategory (categoriesId) {
+      // Do simple filtering
+      const vm = this
+      vm.products = vm.products.filter(product => {
+        return categoriesId.some(catId => {
+          return product.categories.some(cat => {
+            return cat.id === catId
+          })
+        })
+      })
     }
   }
 }
