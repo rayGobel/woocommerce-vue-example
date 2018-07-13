@@ -14,6 +14,12 @@ const RESTService = {
       [ 'oauth_timestamp', date ]
     ]
 
+    if (config) {
+      let params = config.params
+      let paramsArray = Object.keys(params).map(key => [key, params[key]])
+      oauthParams.push.apply(oauthParams, paramsArray)
+    }
+
     const secret = generateSecretParams(oauthParams)
 
     const signatureBaseString = generateSignatureBaseString('GET', endpoint, secret)

@@ -2,9 +2,9 @@ import RESTService from './RESTService'
 
 const API_ENDPOINT = process.env.API_ENDPOINT
 const ProductService = {
-  getProducts (limit) {
+  getProducts (pageNumber) {
     const endpoint = API_ENDPOINT + 'wp-json/wc/v2/products'
-    return RESTService.get(endpoint)
+    return RESTService.get(endpoint, { params: { 'page': pageNumber || 1 } })
       .catch(err => this.handleError(err))
   },
 
