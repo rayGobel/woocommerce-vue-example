@@ -1,9 +1,10 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <div class="card-title h4">Category</div>
+      <div class="card-title h4">Filter</div>
     </div>
     <div class="card-body">
+      <h5>Category</h5>
       <div class="form-group">
         <label v-for="(category, index) in categories" :key="index" class="form-checkbox">
           <input

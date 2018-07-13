@@ -48,7 +48,7 @@ export default {
       products: [],
       categories: [],
       page: 1,
-      displayPerPage: 4,
+      displayPerPage: 3,
       filter: {
         categories: []
       }
@@ -56,15 +56,11 @@ export default {
   },
   computed: {
     filteredProducts () {
+      // Computed property will automatically recalculate
+      // whenever its dependency updates. e.g. vm.filter
       const vm = this
       if (vm.filter.categories.length) {
-        return vm.products.filter(product => {
-          return vm.filter.categories.some(catId => {
-            return product.categories.some(cat => {
-              return cat.id === catId
-            })
-          })
-        })
+        return vm.products.filter(product => isFilteredWith(product.categories, vm.filter.categories))
       } else {
         return vm.products
       }
@@ -101,16 +97,11 @@ export default {
       // Do simple filtering
       const vm = this
       vm.filter.categories = categoriesId
-      /*
-      vm.products = vm.products.filter(product => {
-        return categoriesId.some(catId => {
-          return product.categories.some(cat => {
-            return cat.id === catId
-          })
-        })
-      })
-      */
     }
   }
+}
+
+function isFilteredWith (productCat, categoryArr) {
+  return productCat.some(category => categoryArr.indexOf(category.id) >= 0)
 }
 </script>
