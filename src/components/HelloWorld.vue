@@ -48,17 +48,34 @@ export default {
       products: [],
       categories: [],
       page: 1,
-      displayPerPage: 4
+      displayPerPage: 4,
+      filter: {
+        categories: []
+      }
     }
   },
   computed: {
+    filteredProducts () {
+      const vm = this
+      if (vm.filter.categories.length) {
+        return vm.products.filter(product => {
+          return vm.filter.categories.some(catId => {
+            return product.categories.some(cat => {
+              return cat.id === catId
+            })
+          })
+        })
+      } else {
+        return vm.products
+      }
+    },
     displayedProducts () {
       const currentPage = this.page - 1
       const pageSize = this.displayPerPage
-      return this.products.slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+      return this.filteredProducts.slice(currentPage * pageSize, (currentPage + 1) * pageSize)
     },
     maxPage () {
-      return Math.ceil(this.products.length / this.displayPerPage)
+      return Math.ceil(this.filteredProducts.length / this.displayPerPage)
     }
   },
   created () {
@@ -83,6 +100,8 @@ export default {
     filterByCategory (categoriesId) {
       // Do simple filtering
       const vm = this
+      vm.filter.categories = categoriesId
+      /*
       vm.products = vm.products.filter(product => {
         return categoriesId.some(catId => {
           return product.categories.some(cat => {
@@ -90,6 +109,7 @@ export default {
           })
         })
       })
+      */
     }
   }
 }
