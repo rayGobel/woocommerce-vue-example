@@ -10,7 +10,7 @@
 
       <div class="column col-10">
         <div class="columns">
-          <div v-for="(product, index) in products" :key="index" class="column col-4 col-md-6 col-xs-12">
+          <div v-for="(product, index) in displayedProducts" :key="index" class="column col-4 col-md-6 col-xs-12">
             <product-card :product="product"></product-card>
           </div>
         </div>
@@ -48,7 +48,17 @@ export default {
       products: [],
       categories: [],
       page: 1,
-      maxPage: 2
+      displayPerPage: 4
+    }
+  },
+  computed: {
+    displayedProducts () {
+      const currentPage = this.page - 1
+      const pageSize = this.displayPerPage
+      return this.products.slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+    },
+    maxPage () {
+      return Math.ceil(this.products.length / this.displayPerPage)
     }
   },
   created () {
@@ -64,23 +74,11 @@ export default {
   methods: {
     goToPrevPage () {
       const vm = this
-      const currentPage = vm.page
-      const prevPage = currentPage - 1
-      ProductService.getProducts(prevPage)
-        .then(products => {
-          vm.products = products
-          vm.page = prevPage
-        })
+      vm.page = vm.page - 1
     },
     goToNextPage () {
       const vm = this
-      const currentPage = vm.page
-      const nextPage = currentPage + 1
-      ProductService.getProducts(nextPage)
-        .then(products => {
-          vm.products = products
-          vm.page = nextPage
-        })
+      vm.page = vm.page + 1
     },
     filterByCategory (categoriesId) {
       // Do simple filtering

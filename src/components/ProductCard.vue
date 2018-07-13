@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header">
       <div class="card-title h5">{{ product.name }}</div>
-      <div class="card-subtitle text-gray">product description goes here</div>
+      <div class="card-subtitle text-gray" v-html="product.short_description"></div>
     </div>
     <div class="card-image">
       <img :src="product.images[0].src" alt="card-image" class="img-responsive">
